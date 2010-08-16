@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <p>
+        This demonstrates how a trivial project can be built with django social-registration.
+    </p>
+    <p>
+        This homepage does not require logging in.  Proceed to the 
+        <a href="{% url trivial.views.secure %}">Secure part of the site</a>.
+    </p>
+{% endblock %}

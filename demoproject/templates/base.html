@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>Demo of Django Social-Registration</title>
+    <style>
+      body {
+        font-family: verdana;
+      }
+
+      .header {
+        background-color: #eee;
+      }
+      .usertools {
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+        <h1>Django Social-Registration Demonstration Project</h1>
+        <div class="usertools">
+            {% if user.is_authenticated %}
+              Hello {{user.username}}.  
+              <a href="{% url django.contrib.auth.views.logout %}">Log out</a>
+            {% else %}
+              You're not logged in.
+            {% endif %}
+        </div>
+    </div>
+
+    {% block content %}
+    {% endblock %}
+  </body>
+</html>
