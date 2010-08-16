@@ -28,6 +28,24 @@ FB_ERROR = _('We couldn\'t validate your Facebook credentials')
 
 GENERATE_USERNAME = bool(getattr(settings, 'SOCIALREGISTRATION_GENERATE_USERNAME', False))
 
+def _callback_url(request):
+    site_domain = Site.objects.get_current().domain
+    if site_domain != 'example.com':
+        # Site is properly configured.  Use it
+        return 'http%s://%s%s' % (
+            _https(),
+            Site.objects.get_current().domain,
+            reverse('openid_callback')
+        )
+
+    # django.site is not configured. Figure out the domain from the request
+    # Why not just always do this?
+    url = request.build_absolute_uri( reverse('openid_callback') )
+    if _https():
+        url = re.sub('http://','https://',url)
+    return url
+
+
 def _get_next(request):
     """
     Returns a url to redirect to after the login
@@ -240,11 +258,7 @@ def openid_redirect(request):
 
     client = OpenID(
         request,
-        'http%s://%s%s' % (
-            _https(),
-            Site.objects.get_current().domain,
-            reverse('openid_callback')
-        ),
+        _callback_url(request),
         request.GET.get('openid_provider')
     )
     try:
@@ -260,11 +274,7 @@ def openid_callback(request, template='socialregistration/openid.html',
     """
     client = OpenID(
         request,
-        'http%s://%s%s' % (
-            _https(),
-            Site.objects.get_current().domain,
-            reverse('openid_callback')
-        ),
+        _callback_url(request),
         request.session.get('openid_provider')
     )
 
