@@ -1,6 +1,7 @@
 *.pyc
 .DS_Store
 *.sql3
+local_settings.py
 
 django_socialregistration.egg-info
 build/

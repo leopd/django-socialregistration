@@ -61,12 +61,27 @@ ADMIN_MEDIA_PREFIX = '/media/'
 # Make this unique, and don't share it with anybody.
 SECRET_KEY = '(4$jg*@$5588=5*@(lm(!=*-4en+a^kh)r2%%irw*@0rx7xnqs'
 
-# List of callables that know how to import templates from various sources.
-TEMPLATE_LOADERS = (
-    'django.template.loaders.filesystem.Loader',
-    'django.template.loaders.app_directories.Loader',
-#     'django.template.loaders.eggs.Loader',
+
+#
+# Auth settings
+#
+
+AUTHENTICATION_BACKENDS = (
+    'socialregistration.auth.OpenIDAuth',
+    #'socialregistration.auth.TwitterAuth',
+    #'socialregistration.auth.FacebookAuth',  # FB also needs middleware
+    'django.contrib.auth.backends.ModelBackend',
 )
+
+TWITTER_CALLBACK_URI = "^twitter/return/$"
+TWITTER_CONSUMER_KEY = 'set this in your local_settings.py'
+TWITTER_CONSUMER_SECRET_KEY = 'set this in your local_settings.py'
+# These shouldn't need over-riding from the defaults 
+#TWITTER_REQUEST_TOKEN_URL = 'https://api.twitter.com/oauth/request_token'
+#TWITTER_ACCESS_TOKEN_URL = 'https://api.twitter.com/oauth/access_token'
+#TWITTER_AUTHORIZATION_URL = 'https://api.twitter.com/oauth/authorize'
+
+
 
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
@@ -74,11 +89,23 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    #'socialregistration.middleware.FacebookMiddleware',
 )
+
+
 
 ROOT_URLCONF = 'demoproject.urls'
 
+# List of callables that know how to import templates from various sources.
+TEMPLATE_LOADERS = (
+    'django.template.loaders.filesystem.Loader',
+    'django.template.loaders.app_directories.Loader',
+#     'django.template.loaders.eggs.Loader',
+)
+
+
 TEMPLATE_DIRS = (
+    # This should IMHO be default django behavior. Look in the templates/ dir off the project root
     os.path.join(os.path.dirname(__file__), 'templates')
 )
 
@@ -95,3 +122,15 @@ INSTALLED_APPS = (
     'socialregistration',
     'trivial',
 )
+
+import traceback
+try:
+    #
+    # Load settings which are site-specific or otherwise shouldn't be included 
+    # in source control.
+    #
+    from local_settings import *
+except:
+    traceback.print_exc()
+    print "Failed to load local_settings.py.  Try 'touch local_settings.py' if you're not sure what to do."
+

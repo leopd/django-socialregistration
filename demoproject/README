@@ -1,1 +1,4 @@
 A trivial project to demonstrate how django-socialregistration works.
+
+Site-specific data in local_settings.py which is excluded from git in .gitignore.
+Look at example_local_settings.py for an example.
