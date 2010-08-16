@@ -10,7 +10,9 @@ urlpatterns = patterns('',
     (r'^secure/$', 'trivial.views.secure'),
 
 
-    (r'^accounts/login/$', 'django.contrib.auth.views.login'),
+    (r'^accounts/login/$', 'django.views.generic.simple.direct_to_template',
+                        {'template': 'login.html'}),
+
     (r'^accounts/logout/$', 'django.contrib.auth.views.logout', {'next_page':'/'} ),
 
 

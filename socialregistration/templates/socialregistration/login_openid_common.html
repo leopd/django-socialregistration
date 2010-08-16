@@ -1,0 +1,28 @@
+{% load openid_tags %}
+
+<h2>Login with Gmail / Google Account</h2>
+<form action="{% url socialregistration.views.openid_redirect %}" method="GET">
+    <input type="hidden" name="openid_provider" value="https://www.google.com/accounts/o8/id" /> 
+    <input type="submit" value="Login with Google account" /> 
+</form> 
+
+
+<h2>Login with Yahoo</h2>
+<form action="{% url socialregistration.views.openid_redirect %}" method="GET">
+    <input type="hidden" name="openid_provider" value="https://www.yahoo.com/" /> 
+    <input type="submit" value="Login with Yahoo account" /> 
+</form> 
+
+<h2>Login with AOL</h2>
+<form action="{% url socialregistration.views.openid_redirect %}" method="GET">
+    <input type="hidden" name="openid_provider" value="https://aol.com/" />
+    <input type="submit" value="Login with AOL account" /> 
+</form> 
+
+<h2>Login with other openID</h2>
+<form action="{% url socialregistration.views.openid_redirect %}" method="GET">
+    OpenID URL:<input type="text" name="openid_provider" size="70" /> <br/>
+    <input type="submit" value="Login with OpenID" /> 
+</form> 
+
+
