@@ -5,6 +5,7 @@ Updated on 19.12.2009
 @author: alen, pinda
 """
 from django.conf import settings
+from socialregistration import twitter_default_settings
 from django.conf.urls.defaults import *
 
 
